@@ -67,6 +67,7 @@ var stuff;
         e.preventDefault();
 
         var searchTerms = $("#search").val();
+        $("#search").val("");
         var searchUrl = "/contracts/search.json?q=" +  searchTerms;
 
         $.get( searchUrl, function( data ) {
