@@ -142,7 +142,7 @@
                 { label: "EPP Purchases", value: <%=  @summary.epp_spending %> },
                 {label: "Potential EPP Purchases", value: <%= @summary.potential_epp_spending %>}],
             resize: true,
-            colors: ['#87d6c6', '#54cdb4', '#1ab394'],
+            colors: ['#990000', '#1ab394', '#CC8080'],
             formatter: function(y, data) {
                 return accounting.formatMoney(y);
             }
@@ -160,7 +160,7 @@
                     { label: "EPP Purchases", value: <%=  @summary.epp_spending_by_year(i) %> },
                     {label: "Potential EPP Purchases", value: <%= @summary.potential_epp_spending_by_year(i) %>}],
                 resize: true,
-                colors: ['#87d6c6', '#54cdb4', '#1ab394'],
+                colors: ['#990000', '#1ab394', '#CC8080'],
                 formatter: function(y, data) {
                     return accounting.formatMoney(y);
                 }
