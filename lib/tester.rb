@@ -1,4 +1,4 @@
-@client = SODA::Client.new({:domain => "greengov.data.ca.gov", :app_token => "XPpVkNy5lJIG1cOG7EBaLZJ62"})
+@client = SODA::Client.new({:domain => "greengov.data.ca.gov", :app_token => ENV["SOCRATA_APP_TOKEN"]})
 @response = nil
 
 def load_data
