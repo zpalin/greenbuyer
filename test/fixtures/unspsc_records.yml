@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  level_one: MyString
+  level_two: MyString
+  level_three: MyString
+  level_four: MyString
+  level_one_description: MyString
+  level_two_description: MyString
+  level_three_description: MyString
+  level_four_description: MyString
+
+two:
+  level_one: MyString
+  level_two: MyString
+  level_three: MyString
+  level_four: MyString
+  level_one_description: MyString
+  level_two_description: MyString
+  level_three_description: MyString
+  level_four_description: MyString

@@ -1,0 +1,73 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="container">
+    	<div class="row">
+    		<div class="col-lg-10">
+        <h2>Welcome to GreenBuyer!</h2>
+        <ol class="breadcrumb">
+	        <li>
+	            <a href="/">Home</a>
+	        </li>
+
+	        <li class="active">
+	            <strong>Departments</strong>
+	        </li>
+    	</ol>
+	</div>
+    	</div>
+    </div>
+</div>    
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <input class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table" type="text">
+                        <table class="footable table table-striped" data-filter="#filter" data-page-size="25">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% @departments.each do |department| %>
+                                	<tr>
+                                		<td>
+                                			<a href=<%= department_path department %>>
+                                				<%= department.display_name %>
+                                			</a>
+                                		</td>
+                                	</tr>
+                                <% end %>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="5">
+                                        <ul class="pagination pull-right">
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%content_for :javascript do %>
+    <script type="text/javascript">
+
+
+    $(function() {
+
+    $('.footable').footable();
+
+
+    });
+
+    </script> 
+<%end %>

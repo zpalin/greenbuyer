@@ -1,0 +1,23 @@
+<div class="col-lg-4">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h3><%= spending_year %> Spending</h3>
+        </div>
+        <div class="ibox-content">
+            <ul>
+                <li>
+                    <strong>EPP Purchases:</strong> <%= number_to_currency department.epp_spending_by_year(spending_year) %> 
+                    <%= "(#{number_to_percentage department.epp_percent_by_year(spending_year)})" %>
+                </li>
+                <li>
+                    <strong>SABRC Purchases:</strong> <%= number_to_currency department.sabrc_spending_by_year(spending_year) %>
+                    <%= "(#{number_to_percentage department.sabrc_percent_by_year(spending_year)})" %>
+                </li>    
+                <li>
+                    <strong>Total Spending:</strong> <%= number_to_currency department.total_spending_by_year(spending_year) %>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>

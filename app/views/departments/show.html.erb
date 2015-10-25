@@ -1,0 +1,189 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="container">
+    	<div class="row">
+    		<div class="col-lg-10">
+        <h2><%= @department.display_name %></h2>
+        <ol class="breadcrumb">
+	        <li>
+	            <a href="/">Home</a>
+	        </li>
+	        <li>
+	            <a href="/departments">Departments</a>
+	        </li>
+	        <li class="active">
+	            <strong><%= @department.display_name %></strong>
+	        </li>
+    	</ol>
+	</div>
+    	</div>
+    </div>
+</div>    
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h3>EPP Spending Percent (%) By Year</h3>
+                    </div>
+                    <div class="ibox-content">
+                        <div id="spending-line-chart"></div>
+                    </div>
+                    <div class="ibox-footer">
+                        <br>
+                        <h2></h2>
+                    </div>                    
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">All</a></li>
+                        <% for i in 2012..Date.today.year %>
+                            <li class=""><a data-toggle="tab" href=<%= "#tab-#{i}" %> aria-expanded="false"><%= i %></a></li>                                             
+                        <% end %>                        
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tab-1" class="tab-pane active">
+                            <div class="panel-body">
+                                <div id="total-donut-chart"></div>
+                                <h2 style="text-align: center;"><strong>Total: </strong><%= number_to_currency @department.total_spending %></h2>
+                            </div>
+                        </div>
+                        <% for i in 2012..Date.today.year %>
+                            <div id=<%= "tab-#{i}" %> class="tab-pane">
+                                <div class="panel-body">
+                                    <div id=<%= "total-donut-chart-#{i}" %> ></div>
+                                    <h2 style="text-align: center;"><strong>Total: </strong><%= number_to_currency @department.total_spending_by_year(i) %></h2>
+                                </div>
+                            </div>                        
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>   
+<br>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h3>Potential EPP Contract Matches</h3>
+                    </div>
+                    <div class="ibox-content">
+                        <table class="footable table table-striped" data-filter="#filter" data-page-size="10">
+                            <thead>
+                                <tr>
+                                    <th>Purchase Order Number</th>
+                                    <th>Purchase Date</th>
+                                    <th>Item Name</th>
+                                    <th>Acquisition Method</th>
+                                    <th>Total Price</th>
+                                    <th>Possible Contract Match</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% @purchases.each do |purch| %>
+                                    <tr>
+                                        <td><%= purch.purchase_order_number %></td>
+                                        <td><%= purch.purchase_date.to_s %></td>
+                                        <td><%= purch.item_name %></td>
+                                        <td><%= purch.acquisition_method %></td>
+                                        <td><%= purch.total_price.to_s %></td>
+                                        <td><a href=<%= purch.contract_url %>><%= purch.potential_contract %></a></td>
+                                    </tr>
+                                <% end %>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="5">
+                                        <ul class="pagination pull-right">
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>                 
+    </div>
+</div>
+
+<%content_for :javascript do %>
+    <script type="text/javascript">
+
+
+
+    $(function() {
+
+        var data = [
+            <% for i in 2012..Date.today.year %>
+                <% unless @department.epp_percent_by_year(i).to_s == "NaN"  %>
+                    {year: '<%= i %>', value: <%= number_to_percentage(@department.epp_percent_by_year(i)).to_f %>} <%= ',' unless i == Date.today.year %>
+                <% end %>
+            <% end %>
+        ];
+
+        Morris.Line({
+            element: 'spending-line-chart',
+            data: data,
+            xkey: 'year',
+            ykeys: ['value'],
+            resize: true,
+            lineWidth: 4,
+            labels: ['Value'],
+            lineColors: ['#1ab394'],
+            pointSize: 5,
+            xLabels: "year",
+            yLabelFormat: function(y) {
+                return y.toString() + "%"
+            }
+        });
+
+        Morris.Donut({
+            element: 'total-donut-chart',
+            data: [{ label: "Non-EPP Purchases", value: <%=  @department.non_epp_spending %> },
+                { label: "EPP Purchases", value: <%=  @department.epp_spending %> },
+                {label: "Potential EPP Purchases", value: <%= @department.potential_epp_spending %>}],
+            resize: true,
+            colors: ['#87d6c6', '#54cdb4', '#1ab394'],
+            formatter: function(y, data) {
+                return accounting.formatMoney(y);
+            }
+        });        
+        
+
+        <% for i in 2012..Date.today.year %>
+            var <%= "graph#{i}Triggered" %> = false;
+            $(document).on('shown.bs.tab', 'a[href="#tab-<%= i %>"]', function (e) {
+
+              if (<%= "graph#{i}Triggered" %> == false) 
+              {
+                scrollPos = $(window).scrollTop();
+                console.log(scrollPos);
+                Morris.Donut({
+                  element: '<%= "total-donut-chart-#{i}" %>',
+                  data: [{ label: "Non-EPP Purchases", value: <%=  @department.non_epp_spending_by_year(i)%> },
+                        { label: "EPP Purchases", value: <%=  @department.epp_spending_by_year(i) %> },
+                        {label: "Potential EPP Purchases", value: <%= @department.potential_epp_spending_by_year(i) %>}],
+                  resize: true,
+                  colors: ['#87d6c6', '#54cdb4', '#1ab394'],
+                  formatter: function(y, data) {
+                      return accounting.formatMoney(y);
+                  }
+                });   
+                $(window).scrollTop(scrollPos);
+                <%= "graph#{i}Triggered" %> = true;
+              }
+
+            });
+        <% end %>
+
+        $('.footable').footable();
+
+    });
+    </script> 
+<%end %>

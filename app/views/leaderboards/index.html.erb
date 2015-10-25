@@ -1,0 +1,106 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>EPP Spending by Percent (%)</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>                  
+                    <div class="ibox-content">
+                        <table class="footable table table-striped" data-filter="#filter" data-page-size="10">
+                            <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>Department</th>
+                                  <th>%</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                              <% @i = 1 %>
+                              <% @epp_spending_leaders.each do |leader| %>
+                                <tr>
+                                  <td><%= @i %></td>
+                                  <td><a href=<%= department_path leader %>><%= leader.display_name %></a></td>
+                                  <td><%= number_to_percentage leader.epp_percent %></td>
+                                </tr>
+                                <% @i = @i + 1 %>
+                              <% end %>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="5">
+                                        <ul class="pagination pull-right">
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Potential EPP Spending by Percent (%)</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>                  
+                    <div class="ibox-content">
+                        <table class="footable table table-striped" data-filter="#filter" data-page-size="10">
+                            <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>Department</th>
+                                  <th>%</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                              <% @i = 1 %>
+                              <% @potential_epp_spending_leaders.each do |leader| %>
+                                <tr>
+                                  <td><%= @i %></td>
+                                  <td><a href=<%= department_path leader %>><%= leader.display_name %></a></td>
+                                  <td><%= number_to_percentage leader.potential_epp_percent %></td>
+                                </tr>
+                                <% @i = @i + 1 %>
+                              <% end %>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="5">
+                                        <ul class="pagination pull-right">
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>
+
+<%content_for :javascript do %>
+    <script type="text/javascript">
+
+
+    $(function() {
+
+    $('.footable').footable();
+
+
+    });
+
+    </script> 
+<%end %>

@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  reference_number: MyString
+  description: MyString
+  contract_number: MyString
+  start_date: 2015-10-24
+  end_date: 2015-10-24
+  state_users: MyString
+  local_agencies: false
+  contact_name: MyString
+  contact_phone: MyString
+  contact_email: MyString
+  url: MyString
+  epp_compliant: false
+  sabrc_compliant: false
+  sb_dvbe_compliant: false
+
+two:
+  reference_number: MyString
+  description: MyString
+  contract_number: MyString
+  start_date: 2015-10-24
+  end_date: 2015-10-24
+  state_users: MyString
+  local_agencies: false
+  contact_name: MyString
+  contact_phone: MyString
+  contact_email: MyString
+  url: MyString
+  epp_compliant: false
+  sabrc_compliant: false
+  sb_dvbe_compliant: false

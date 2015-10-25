@@ -1,0 +1,48 @@
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+  <!--       <div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+            <form role="search" class="navbar-form-custom" method="post" action="/">
+                <div class="form-group">
+                    <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search" />
+                </div>
+            </form>
+        </div> -->
+        <div class="navbar-header">
+            <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                <i class="fa fa-reorder"></i>
+            </button>
+            <a href="#" class="navbar-brand">GreenBuyer</a>
+        </div>        
+        <ul class="nav navbar-nav">
+            <li class="<%= 'active' if current_page?('/') %>">
+                <%= link_to "/" do %>
+                <i class="fa fa-home"></i> <span class="nav-label">Home</span>
+                <% end %>
+            </li>        
+            <li class="<%= is_active_controller('departments') %>">
+                <%= link_to "/departments" do %>
+                <i class="fa fa-list"></i> <span class="nav-label">Departments</span>
+                <% end %>
+            </li>
+            <li class="<%= is_active_controller('leaderboards') %>">
+                <%= link_to "/leaderboards" do %>
+                <i class="fa fa-trophy"></i> <span class="nav-label">Leaderboards</span>
+                <% end %>
+            </li>
+
+            <li class="<%= is_active_controller('contracts') %>">
+                <%= link_to "/contracts/find" do %>
+                <i class="fa fa-search"></i> <span class="nav-label">Find a contract</span>
+                <% end %>
+            </li>            
+        </ul>        
+<!--         <ul class="nav navbar-top-links navbar-right">
+            <li>
+                <a href="#">
+                    <i class="fa fa-sign-out"></i> Log out
+                </a>
+            </li>            
+        </ul> -->
+    </nav>
+</div>

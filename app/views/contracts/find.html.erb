@@ -1,0 +1,104 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10">
+        <h2>Find a Contract</h2>
+        <ol class="breadcrumb">
+          <li>
+              <a href="/">Home</a>
+          </li>
+
+          <li class="active">
+              <strong>Find a Contract</strong>
+          </li>
+      </ol>
+  </div>
+      </div>
+    </div>
+</div>    
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form id="search-form"><input class="form-control input-sm m-b-xs" id="search" placeholder="Enter UNSPSC Number or Description" type="text"></form>
+                        <table class="footable table table-striped" data-filter="#filter" data-page-size="10">
+                            <thead >
+                                <tr>
+                                    <th>Contract</th>
+                                    <th>Description</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="search-rows">
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="5">
+                                        <ul class="pagination pull-right">
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tfoot>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%content_for :javascript do %>
+    <script type="text/javascript">
+var stuff;
+
+    $(function() {
+
+      // $('.footable').footable();
+
+      $("#search-form").submit(function(e){
+        e.preventDefault();
+
+        var searchTerms = $("#search").val();
+        var searchUrl = "/contracts/search.json?q=" +  searchTerms;
+
+        $.get( searchUrl, function( data ) {
+          stuff = data;
+          
+          $("#search-rows").html("");
+
+          if (data.length > 0) {
+
+            data.forEach(function(contract){
+              row  = "<tr>"
+              row +=   "<td><a href='" + contract.url + "'>" + contract.contract_number + "<a></td>"
+              row +=   "<td>" + contract.description + "</td>"
+              row +=   "<td>" + contract.start_date + "</td>"
+              row +=   "<td>" + contract.end_date + "</td>"
+              row +=   "<td><a href='" + contract.url + "'>View ➝<a></td>"
+              row += "</tr>"
+              console.log(row);
+
+              $("#search-rows").append(row);
+            });
+            $('.footable').footable();
+          } else {
+            console.log("hello");
+            $("#search-rows").append("<br> <p> No contracts found. </p>");
+          }
+        });
+
+      });
+
+
+    });
+
+    </script> 
+<%end %>
