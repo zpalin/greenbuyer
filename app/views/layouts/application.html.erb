@@ -19,20 +19,19 @@
     <div id="wrapper">
 
         <!-- Navigation -->
-
-
-        <!-- Page wraper -->
         <div id="page-wrapper" class="gray-bg" >
+            <% if false %>
+                <%= render 'layouts/coming_soon' %>
+            <% else %>   
+                <!-- Top Navbar -->
+                <%= render 'layouts/topnavbar' %>
 
-            <!-- Top Navbar -->
-            <%= render 'layouts/topnavbar' %>
+                <!-- Main view  -->
+                <%= yield %>
 
-            <!-- Main view  -->
-            <%= yield %>
-
-            <!-- Footer -->
-
-
+                <!-- Footer -->         
+            <% end %>
+            <!-- Page wraper -->
         </div>
         <!-- End page wrapper-->
 

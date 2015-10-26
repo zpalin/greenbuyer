@@ -14,4 +14,5 @@ Rails.application.routes.draw do
 
   get "contracts/find", to: "contracts#find"
   get "contracts/search", to: "contracts#search"
+
 end

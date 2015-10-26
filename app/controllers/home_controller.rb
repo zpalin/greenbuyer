@@ -6,4 +6,7 @@ class HomeController < ApplicationController
 
   def minor
   end
+
+  def coming_soon
+  end
 end
